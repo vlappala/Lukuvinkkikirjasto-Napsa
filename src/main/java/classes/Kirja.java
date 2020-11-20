@@ -1,9 +1,11 @@
+package classes;
+
 public class Kirja {
     String label;
     String author;
     String ISBN;
 
-    public void Kirja(String label) {
+    public Kirja(String label) {
         
         this.label = label;
         this.author = "NIL";
