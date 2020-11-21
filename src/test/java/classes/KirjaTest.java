@@ -9,7 +9,7 @@ public class KirjaTest {
     public void tulostusOikein() {
         Kirja test = new Kirja("Moby Dick");
 
-        assertEquals("Moby Dick: Author: NIL, ISBN: NIL", test.toString());
+        assertEquals("Moby Dick", test.toString());
         }
 
 }
