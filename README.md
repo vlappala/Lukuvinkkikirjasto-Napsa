@@ -3,8 +3,7 @@
 
 Ohtu 2020 miniprojekti.
 
-#### Product backlog / Sprint backlog
-https://helsinkifi-my.sharepoint.com/:f:/g/personal/azkantol_ad_helsinki_fi/EvmzroqYOV5MqYt5tFY8gHYBLK83Z3Vj55KYIftyJfSyWw?e=EOXkGU
+#### ![Product backlog / Sprint backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/azkantol_ad_helsinki_fi/EYcevlQ1BnlPq8r22ioRtskBN9DdZjXZdWUpJ78CX6ozRg?rtime=1ZAvnYqP2Eg)
 
 
 #### Napsa Definition of Done
