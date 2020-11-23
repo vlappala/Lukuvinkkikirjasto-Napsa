@@ -14,8 +14,6 @@ Koodi on
 - Testattua (mahd. mukaan)
 - Integroitua muuhun ohjelmistoon
 
-#### Work in progress
+![Asennus- ja käyttöohje](https://github.com/VirtualAkseli/Lukuvinkkikirjasto-Napsa/käyttöohjeet.md)
 
-![Asennus- ja käyttöohje](https://github.com/VirtualAkseli/Lukuvinkkikirjasto-Napsa/)
 
-Testi
