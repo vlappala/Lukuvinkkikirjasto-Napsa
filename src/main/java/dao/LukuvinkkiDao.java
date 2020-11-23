@@ -12,8 +12,8 @@ public class LukuvinkkiDao {
     
 
     public void saveToFile(String filename, String content) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath + filename + ".txt");
-        fileWriter.write(content);
+        FileWriter fileWriter = new FileWriter(filePath + filename + ".txt", true);
+        fileWriter.write(content + "\n");
         fileWriter.close();
     }
 
