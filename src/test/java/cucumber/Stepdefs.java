@@ -5,8 +5,11 @@ import io.ConsoleIO;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.io.IOException;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import ui.ConsoleUI;
@@ -20,25 +23,41 @@ public class Stepdefs {
     
     @Given("konsoli pyytaa lukuvinkin otsikkoa")
     public void konsoliPyytaaOtsikkoa() {
-        
-    }
-    
-    @When("kelvollinen otsikko {string} syotetaan konsoliin")
-    public void kelvollinenOtsikkoSyotetaan(String otsikko) {
         mockIO = mock(ConsoleIO.class);
         mockLukuvinkkiDao = mock(LukuvinkkiDao.class);
         
-        when(mockIO.readInput("Anna lukuvinkin otsikko: ")).thenReturn(otsikko);
-        
         ui = new ConsoleUI(mockIO, mockLukuvinkkiDao);
-        
-        ui.run();
-        
+    }
+    
+    @When("kelvollinen otsikko {string} syotetaan konsoliin")
+    public void kelvollinenOtsikkoSyotetaan(String otsikko) throws IOException {
+        otsikkoSyotetaan(otsikko);
+    }
+    
+    @When("tyhja otsikko syotetaan konsoliin")
+    public void tyhjaOtsikkoSyotetaan() throws IOException {
+        String tyhja = "";
+        otsikkoSyotetaan(tyhja);
     }
     
     @Then("konsoli vastaa viestilla {string}")
     public void konsoliVastaaViestilla(String viesti) {
         verify(mockIO).printOutput(eq(viesti));
+    }
+    
+    @Then("lukuvinkki tallentuu tiedostoon")
+    public void lukuvinkkiTallentuuTiedostoon() throws IOException {
+        verify(mockLukuvinkkiDao, times(1)).saveToFile(anyString(), anyString());
+    }
+    
+    @Then("lukuvinkki ei tallennu tiedostoon")
+    public void lukuvinkkiEiTallennuTiedostoon() throws IOException {
+        verify(mockLukuvinkkiDao, times(0)).saveToFile(anyString(), anyString());
+    }
+    
+    public void otsikkoSyotetaan(String otsikko) {
+        when(mockIO.readInput("Anna lukuvinkin otsikko: ")).thenReturn(otsikko);
+        ui.run();
     }
     
 }

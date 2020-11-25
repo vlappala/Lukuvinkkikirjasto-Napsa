@@ -1,6 +1,6 @@
 package ui;
 
-import classes.Kirja;
+import domain.Kirja;
 import dao.LukuvinkkiDao;
 import io.ConsoleIO;
 
@@ -25,5 +25,9 @@ public class ConsoleUI {
             }
             console.printOutput("Luotiin lukuvinkki: " + kirja.toString());
         }
+    }
+    
+    public String getFileName() {
+        return this.FILE;
     }
 }
