@@ -1,5 +1,6 @@
-package classes;
+package domain;
 
+import domain.Kirja;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -10,6 +11,6 @@ public class KirjaTest {
         Kirja test = new Kirja("Moby Dick");
 
         assertEquals("Moby Dick", test.toString());
-        }
+    }
 
 }
