@@ -9,33 +9,41 @@ import java.util.Scanner;
 import java.util.List;
 
 
-import domain.Kirja;
+
+import domain.Lukuvinkki;
 
 public class LukuvinkkiDao {
 
     String filePath = "./";
     Gson gson = new Gson();
+    List<Lukuvinkki> vinkit;
     
 
-    public void saveToFile(String filename, List<Kirja> content) throws IOException {
+    public void saveToFile(String filename, List<Lukuvinkki> content) throws IOException {
         
         String output = gson.toJson(content);
-        
-        FileWriter fileWriter = new FileWriter(filePath + filename + ".txt");
+        File newFile = new File(filePath + filename + ".txt");
+        newFile.createNewFile();
+        FileOutputStream oFile = new FileOutputStream(newFile, false); 
+        FileWriter fileWriter = new FileWriter(newFile);
         fileWriter.write(output + "\n");
         
         fileWriter.close();
     }
 
-    public List<Kirja> readFromFile(String filename) throws FileNotFoundException, IOException {
+    public List<Lukuvinkki> readFromFile(String filename) throws FileNotFoundException, IOException {
         
+       
+
         FileInputStream input = new FileInputStream(filePath + filename + ".txt");
         Scanner scanner = new Scanner(input);
        
         String content = "";
         
         
-        
+        if (!scanner.hasNextLine()) {
+            return null;
+        }
         
         while (scanner.hasNextLine()) {
             
@@ -44,8 +52,9 @@ public class LukuvinkkiDao {
 
         scanner.close();
 
-        List<Kirja> fileContent = gson.fromJson(content, new TypeToken<List<Kirja>>() {}.getType());
+        List<Lukuvinkki> fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {}.getType());
 
+        
         
         return fileContent;
 

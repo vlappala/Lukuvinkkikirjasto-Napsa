@@ -5,8 +5,11 @@ import domain.Kirja;
 import domain.Lukuvinkki;
 import dao.LukuvinkkiDao;
 import io.ConsoleIO;
+import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class ConsoleUI {
 
@@ -15,7 +18,9 @@ public class ConsoleUI {
     private LukuvinkkiDao dao;
     private String uusiLukuvinkki;
     private Kirja[] content;
-    private List<Kirja> vinkit;
+    private List<Lukuvinkki> vinkit;
+    private File baseFile;
+    
     
     
 
@@ -31,36 +36,50 @@ public class ConsoleUI {
         Kirja kirja = new Kirja(console.readInput("Anna lukuvinkin otsikko: "));
         String loppuTulostus = "";
         
+        
+
         if (kirja.toString() != null && !kirja.toString().isEmpty()) {
+
             try {
+                    
+                        //Ensin luetaan Vinkit.txt, vanhat tiedot otetaan talteen listaan
+                        vinkit = dao.readFromFile(FILE);
 
-                    //Ensin luetaan Vinkit.txt, vanhat tiedot otetaan talteen listaan
-                    vinkit = dao.readFromFile(FILE);
+                        //Uusi olio lisätään listaan
+                        vinkit.add(kirja);
+                    
+                        //Lista työnnetään JSON-muodossa tiedostoon, samalla ylikirjoittaen
+                        dao.saveToFile(FILE, vinkit);
 
-                    //Uusi olio lisätään listaan
-                    vinkit.add(kirja);
+                        //Kikkailua
+                        int vika = dao.readFromFile(FILE).size() - 1;
+                        loppuTulostus = dao.readFromFile(FILE).get(vika).toString();
 
-                    //Lista työnnetään JSON-muodossa tiedostoon, samalla ylikirjoittaen
-                    dao.saveToFile(FILE, vinkit);
-
-                    //Kikkailua
-                    int vika = dao.readFromFile(FILE).size() - 1;
-                    loppuTulostus = dao.readFromFile(FILE).get(vika).toString();
+                    
 
                     
                 
                 
-               
+                
 
             } catch (Exception e) {
                 console.printOutput("VIRHE: " + e.getMessage());
             }
+
+            
+
+            
             
             console.printOutput("Luotiin lukuvinkki: " + loppuTulostus);
-        }
+        
+    
     }
+
+}
     
     public String getFileName() {
         return this.FILE;
     }
+
+
 }
