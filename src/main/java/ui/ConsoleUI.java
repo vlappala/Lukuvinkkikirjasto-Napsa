@@ -16,8 +16,6 @@ public class ConsoleUI {
     private final String FILE = "Vinkit";
     private ConsoleIO console;
     private LukuvinkkiDao dao;
-    private String uusiLukuvinkki;
-    private Kirja[] content;
     private List<Lukuvinkki> vinkit;
     private File baseFile;
     
@@ -34,31 +32,17 @@ public class ConsoleUI {
 
     public void run() {
         Kirja kirja = new Kirja(console.readInput("Anna lukuvinkin otsikko: "));
-        String loppuTulostus = "";
+        
         
         
 
         if (kirja.toString() != null && !kirja.toString().isEmpty()) {
 
-            try {
+            try {   
+
+                        dao.saveToFile(FILE, kirja);
                     
-                        //Ensin luetaan Vinkit.txt, vanhat tiedot otetaan talteen listaan
                         vinkit = dao.readFromFile(FILE);
-
-                        //Uusi olio lisätään listaan
-                        vinkit.add(kirja);
-                    
-                        //Lista työnnetään JSON-muodossa tiedostoon, samalla ylikirjoittaen
-                        dao.saveToFile(FILE, vinkit);
-
-                        //Kikkailua
-                        int vika = dao.readFromFile(FILE).size() - 1;
-                        loppuTulostus = dao.readFromFile(FILE).get(vika).toString();
-
-                    
-
-                    
-                
                 
                 
 
@@ -70,7 +54,7 @@ public class ConsoleUI {
 
             
             
-            console.printOutput("Luotiin lukuvinkki: " + loppuTulostus);
+            console.printOutput("Luotiin lukuvinkki: " + vinkit.get(vinkit.size()-1));
         
     
     }

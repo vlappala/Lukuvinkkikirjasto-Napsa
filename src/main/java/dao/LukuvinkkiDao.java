@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;  
 import java.util.Scanner;
 import java.util.List;
+import java.util.List;
+import java.util.ArrayList;
 
 
 
@@ -17,13 +19,30 @@ public class LukuvinkkiDao {
     String filePath = "./";
     Gson gson = new Gson();
     List<Lukuvinkki> vinkit;
+    File newFile;
     
 
-    public void saveToFile(String filename, List<Lukuvinkki> content) throws IOException {
+    public void saveToFile(String filename, Lukuvinkki content) throws IOException {
         
-        String output = gson.toJson(content);
-        File newFile = new File(filePath + filename + ".txt");
+        newFile = new File(filePath + filename + ".txt");
         newFile.createNewFile();
+
+        
+        if (readFromFile(filename) == null) {
+            vinkit = new ArrayList<Lukuvinkki>();
+            
+            vinkit.add(content);
+        }
+
+        else {
+
+            vinkit = readFromFile(filename);
+            vinkit.add(content);
+        }
+
+
+        String output = gson.toJson(vinkit);
+        
         FileOutputStream oFile = new FileOutputStream(newFile, false); 
         FileWriter fileWriter = new FileWriter(newFile);
         fileWriter.write(output + "\n");
