@@ -1,6 +1,7 @@
 package ui;
 
 import dao.LukuvinkkiDao;
+import domain.Kirja;
 import io.ConsoleIO;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.*;
 public class ConsoleUITest {
 
     private final String FILE = "Vinkit";
+    private final Kirja vinkki = new Kirja("Raamattu");
 
     ConsoleIO console;
     LukuvinkkiDao dao;
@@ -33,7 +35,7 @@ public class ConsoleUITest {
         when(console.readInput("Anna lukuvinkin otsikko: ")).thenReturn("Raamattu");
         ui.run();
         try {
-            verify(dao).saveToFile(FILE, "Raamattu");
+            verify(dao).saveToFile(FILE, vinkki);
         } catch (Exception e) {
         }
     }

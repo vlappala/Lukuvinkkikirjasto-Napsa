@@ -1,6 +1,7 @@
 package cucumber;
 
 import dao.LukuvinkkiDao;
+import domain.Kirja;
 import io.ConsoleIO;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -47,12 +48,12 @@ public class Stepdefs {
     
     @Then("lukuvinkki tallentuu tiedostoon")
     public void lukuvinkkiTallentuuTiedostoon() throws IOException {
-        verify(mockLukuvinkkiDao, times(1)).saveToFile(anyString(), anyString());
+        verify(mockLukuvinkkiDao, times(1)).saveToFile(anyString(), new Kirja(anyString()));
     }
     
     @Then("lukuvinkki ei tallennu tiedostoon")
     public void lukuvinkkiEiTallennuTiedostoon() throws IOException {
-        verify(mockLukuvinkkiDao, times(0)).saveToFile(anyString(), anyString());
+        verify(mockLukuvinkkiDao, times(0)).saveToFile(anyString(), new Kirja(anyString()));
     }
     
     public void otsikkoSyotetaan(String otsikko) {
