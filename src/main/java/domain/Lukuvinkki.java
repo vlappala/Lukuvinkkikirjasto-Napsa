@@ -2,7 +2,10 @@ package domain;
 
 import java.util.Date;
 
-public abstract class Lukuvinkki {
+import java.lang.reflect.Type;
+import com.google.gson.InstanceCreator;
+
+public class Lukuvinkki implements InstanceCreator<Lukuvinkki>{
     
     private String label;
     // lukuvinkin tyyppi esim. kirja
@@ -41,6 +44,11 @@ public abstract class Lukuvinkki {
     @Override
     public String toString() {
         return this.label;
+    }
+
+    @Override
+    public Lukuvinkki createInstance(Type type) {
+        return new Lukuvinkki(label);
     }
 
 }

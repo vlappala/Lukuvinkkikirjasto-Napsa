@@ -25,6 +25,9 @@ dependencies {
     testCompile 'org.mockito:mockito-core:3.1.0'
     testCompile 'io.cucumber:cucumber-java:' + cucumberVersion;
     testCompile 'io.cucumber:cucumber-junit:' + cucumberVersion;
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.0-rc2'
+
 }
 
 jar {

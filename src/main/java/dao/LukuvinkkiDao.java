@@ -1,32 +1,80 @@
 package dao;
 
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.lang.reflect.Type; 
+import java.io.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;  
+import java.util.Scanner;
+import java.util.List;
+import java.util.List;
+import java.util.ArrayList;
+
+
+
+import domain.Lukuvinkki;
 
 public class LukuvinkkiDao {
 
     String filePath = "./";
+    Gson gson = new Gson();
+    List<Lukuvinkki> vinkit;
+    File newFile;
     
 
-    public void saveToFile(String filename, String content) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath + filename + ".txt", true);
-        fileWriter.write(content + "\n");
+    public void saveToFile(String filename, Lukuvinkki content) throws IOException {
+        
+        newFile = new File(filePath + filename + ".txt");
+        newFile.createNewFile();
+
+        
+        if (readFromFile(filename) == null) {
+            vinkit = new ArrayList<Lukuvinkki>();
+            
+            vinkit.add(content);
+        }
+
+        else {
+
+            vinkit = readFromFile(filename);
+            vinkit.add(content);
+        }
+
+
+        String output = gson.toJson(vinkit);
+        
+        FileOutputStream oFile = new FileOutputStream(newFile, false); 
+        FileWriter fileWriter = new FileWriter(newFile);
+        fileWriter.write(output + "\n");
+        
         fileWriter.close();
     }
 
-    public String readFromFile(String filename) throws FileNotFoundException, IOException {
-        FileReader fileReader = new FileReader(filePath + filename + ".txt");
-        String fileContent = "";
-        int ch = fileReader.read();
+    public List<Lukuvinkki> readFromFile(String filename) throws FileNotFoundException, IOException {
+        
+       
 
-        while(ch != -1) {
-            fileContent = fileContent + (char)ch;
-            fileReader.close();
+        FileInputStream input = new FileInputStream(filePath + filename + ".txt");
+        Scanner scanner = new Scanner(input);
+       
+        String content = "";
+        
+        
+        if (!scanner.hasNextLine()) {
+            return null;
+        }
+        
+        while (scanner.hasNextLine()) {
+            
+            content = content + scanner.nextLine();
         }
 
+        scanner.close();
+
+        List<Lukuvinkki> fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {}.getType());
+
+        
+        
         return fileContent;
 
     }
