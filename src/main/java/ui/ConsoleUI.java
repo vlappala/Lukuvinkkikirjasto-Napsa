@@ -61,7 +61,7 @@ public class ConsoleUI {
             }
 
             // Toiminnon valinta. Virheelliset putoavat läpi ja tulostuu uusi lista.
-            if (haku && !syote.trim().isEmpty()) { // Haku
+            if (haku && !syote.isBlank()) { // Haku
                 Etsija e = new Etsija(vinkit);
                 vinkit = e.etsiVinkinNimella(syote);
                 rajattu = true;
@@ -88,7 +88,7 @@ public class ConsoleUI {
 
     public void lisaa() {
         Kirja kirja = new Kirja(console.readInput("\nAnna lukuvinkin otsikko: "));
-        if (kirja.toString() != null && !kirja.toString().trim().isEmpty()) {
+        if (kirja.toString() != null && !kirja.toString().isBlank()) {
             try {
                 dao.saveToFile(kirja);
                 vinkit = dao.readFromFile();
