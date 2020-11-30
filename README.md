@@ -14,6 +14,6 @@ Koodi on
 - Testattua (mahd. mukaan)
 - Integroitua muuhun ohjelmistoon
 
-![Asennus- ja käyttöohje](https://github.com/VirtualAkseli/Lukuvinkkikirjasto-Napsa/blob/main/käyttöohjeet.md)
+![Asennus- ja käyttöohje](https://github.com/VirtualAkseli/Lukuvinkkikirjasto-Napsa/blob/main/dokumentointi/käyttöohjeet.md)
 
 
