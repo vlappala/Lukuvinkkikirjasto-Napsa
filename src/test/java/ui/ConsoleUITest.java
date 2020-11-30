@@ -12,7 +12,6 @@ import static org.mockito.Mockito.*;
 
 public class ConsoleUITest {
 
-    private final String FILE = "Testi";
     private final Kirja vinkki = new Kirja("Raamattu");
     private final ArrayList<Lukuvinkki> vinkit = new ArrayList<>();
 
@@ -31,10 +30,10 @@ public class ConsoleUITest {
 
     @Test(timeout = 1000)
     public void uiKysyyToiminnon() throws IOException, FileNotFoundException {
-        try {
-            when(dao.readFromFile(FILE)).thenReturn(vinkit);
-        } catch (Exception e) {
-        }
+
+        when(console.readInput("\n 0 < Luo uusi vinkki >"))
+                .thenReturn("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
+
         ui.run();
         verify(console).readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
     }
@@ -42,7 +41,7 @@ public class ConsoleUITest {
     @Test(timeout = 1000)
     public void uiTallentaaVinkin() throws IOException {
         try {
-            when(dao.readFromFile(FILE)).thenReturn(vinkit);
+            when(dao.readFromFile()).thenReturn(vinkit);
         } catch (Exception e) {
         }
         when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("0");
@@ -50,13 +49,13 @@ public class ConsoleUITest {
         ui.run();
         dao.saveToFile(vinkki);
         verify(dao).readFromFile();
-        
+
     }
 
     @Test(timeout = 1000)
     public void uiTulostaaVinkin() throws IOException, FileNotFoundException {
         try {
-            when(dao.readFromFile(FILE)).thenReturn(vinkit);
+            when(dao.readFromFile()).thenReturn(vinkit);
         } catch (Exception e) {
         }
         when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("0");
@@ -64,6 +63,7 @@ public class ConsoleUITest {
         ui.run();
         dao.saveToFile(vinkki);
 
-        verify(console).printOutput(vinkki.changeTimeToString(vinkki.getAddDateTime()) + " Luotiin lukuvinkki: Raamattu");
+        verify(console)
+                .printOutput(vinkki.changeTimeToString(vinkki.getAddDateTime()) + " Luotiin lukuvinkki: Raamattu");
     }
 }

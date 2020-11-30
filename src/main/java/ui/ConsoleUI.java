@@ -11,19 +11,20 @@ import java.util.ArrayList;
 
 public class ConsoleUI {
 
-    
     private ConsoleIO console;
     private LukuvinkkiDao dao;
     private List<Lukuvinkki> vinkit;
+    String syote;
 
     public ConsoleUI(ConsoleIO console, LukuvinkkiDao dao) {
         this.console = console;
         this.dao = dao;
+        syote = "";
     }
 
-    private void lueVinkit() {
+    private void lueVinkit() throws IOException, FileNotFoundException {
         try {
-            vinkit = dao.readFromFile(FILE);
+            vinkit = dao.readFromFile();
         } catch (Exception e) {
             console.printOutput("VIRHE: " + e.getMessage());
             vinkit = new ArrayList<Lukuvinkki>();
@@ -49,9 +50,10 @@ public class ConsoleUI {
             console.printOutput("99 < Lopeta ohjelma >");
 
             // Lue syöte. Teksti tarkoittaa hakua, numero jotain toimintoa
-            String syote = console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
+            syote = console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
             int numero = -1;
             boolean haku = true;
+
             try {
                 numero = Integer.parseInt(syote);
                 haku = false;
@@ -59,22 +61,22 @@ public class ConsoleUI {
             }
 
             // Toiminnon valinta. Virheelliset putoavat läpi ja tulostuu uusi lista.
-            if (haku && !syote.isBlank()) {         // Haku
+            if (haku && !syote.trim().isEmpty()) { // Haku
                 Etsija e = new Etsija(vinkit);
                 vinkit = e.etsiVinkinNimella(syote);
                 rajattu = true;
                 continue;
-            } else if (numero == 0 && !rajattu) {   // Lisäys
+            } else if (numero == 0 && !rajattu) { // Lisäys
                 lisaa();
                 continue;
-            } else if (numero == 0 && rajattu) {    // Haun poisto
+            } else if (numero == 0 && rajattu) { // Haun poisto
                 lueVinkit();
                 rajattu = false;
                 continue;
             } else if (numero > 0 && numero <= vinkit.size() + 1) {
                 nayta(vinkit.get(numero - 1)); // Valinnat alkavat ykkösestä
                 continue;
-            } else if (numero == 99) {              // Lopetus
+            } else if (numero == 99) { // Lopetus
                 break;
             }
         }
@@ -86,15 +88,15 @@ public class ConsoleUI {
 
     public void lisaa() {
         Kirja kirja = new Kirja(console.readInput("\nAnna lukuvinkin otsikko: "));
-        if (kirja.toString() != null && !kirja.toString().isBlank()) {
+        if (kirja.toString() != null && !kirja.toString().trim().isEmpty()) {
             try {
-                dao.saveToFile(FILE, kirja);
-                vinkit = dao.readFromFile(FILE);
+                dao.saveToFile(kirja);
+                vinkit = dao.readFromFile();
             } catch (Exception e) {
                 console.printOutput("VIRHE: " + e.getMessage());
             }
             console.printOutput(kirja.getAddTime() + " Luotiin lukuvinkki: " + kirja);
         }
     }
-    
+
 }
