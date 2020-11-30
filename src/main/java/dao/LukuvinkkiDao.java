@@ -16,19 +16,21 @@ import domain.Lukuvinkki;
 
 public class LukuvinkkiDao {
 
-    String filePath = "./";
+    String filePath = "./Vinkit";
     Gson gson = new Gson();
     List<Lukuvinkki> vinkit;
     File newFile;
+    Scanner scanner;
     
 
-    public void saveToFile(String filename, Lukuvinkki content) throws IOException {
+    public void saveToFile(Lukuvinkki content) throws IOException {
         
-        newFile = new File(filePath + filename + ".txt");
+        
+        newFile = new File(filePath + ".txt");
         newFile.createNewFile();
 
         
-        if (readFromFile(filename) == null) {
+        if (readFromFile() == null) {
             vinkit = new ArrayList<Lukuvinkki>();
             
             vinkit.add(content);
@@ -36,28 +38,32 @@ public class LukuvinkkiDao {
 
         else {
 
-            vinkit = readFromFile(filename);
+            vinkit = readFromFile();
             vinkit.add(content);
         }
 
 
         String output = gson.toJson(vinkit);
-        
+    
         FileOutputStream oFile = new FileOutputStream(newFile, false); 
         FileWriter fileWriter = new FileWriter(newFile);
         fileWriter.write(output + "\n");
         
         fileWriter.close();
+   
     }
 
-    public List<Lukuvinkki> readFromFile(String filename) throws FileNotFoundException, IOException {
+    public List<Lukuvinkki> readFromFile() throws FileNotFoundException, IOException {
         
        
-
-        FileInputStream input = new FileInputStream(filePath + filename + ".txt");
-        Scanner scanner = new Scanner(input);
-       
         String content = "";
+        
+
+        
+        FileInputStream input = new FileInputStream(filePath + ".txt");
+        scanner = new Scanner(input);
+       
+        
         
         
         if (!scanner.hasNextLine()) {
@@ -68,6 +74,8 @@ public class LukuvinkkiDao {
             
             content = content + scanner.nextLine();
         }
+         
+        
 
         scanner.close();
 
