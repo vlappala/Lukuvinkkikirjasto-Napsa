@@ -4,14 +4,14 @@ import domain.Kirja;
 import domain.Lukuvinkki;
 import dao.LukuvinkkiDao;
 import io.ConsoleIO;
-import java.io.File;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ConsoleUI {
 
-    private final String FILE = "Vinkit";
+    
     private ConsoleIO console;
     private LukuvinkkiDao dao;
     private List<Lukuvinkki> vinkit;
@@ -23,29 +23,24 @@ public class ConsoleUI {
 
     }
 
-    public void run() {
+    public void run() throws IOException, FileNotFoundException {
         Kirja kirja = new Kirja(console.readInput("Anna lukuvinkin otsikko: "));
+
 
         if (kirja.toString() != null && !kirja.toString().isEmpty()) {
 
-            try {
+        
 
-                dao.saveToFile(FILE, kirja);
+                dao.saveToFile(kirja);
 
-                vinkit = dao.readFromFile(FILE);
+                vinkit = dao.readFromFile();
 
-            } catch (Exception e) {
-                console.printOutput("VIRHE: " + e.getMessage());
-            }
+        
 
-            console.printOutput(vinkit.get(vinkit.size() - 1).getAddTime() + " Luotiin lukuvinkki: " + vinkit.get(vinkit.size() - 1));
+            console.printOutput(kirja.getAddTime() + " Luotiin lukuvinkki: " + kirja.toString());
 
         }
 
     }
-
-    public String getFileName() {
-        return this.FILE;
-    }
-
+    
 }

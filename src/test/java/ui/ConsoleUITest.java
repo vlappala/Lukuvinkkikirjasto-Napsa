@@ -2,6 +2,7 @@ package ui;
 
 import dao.LukuvinkkiDao;
 import domain.Kirja;
+import java.io.*;
 import io.ConsoleIO;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,25 +26,26 @@ public class ConsoleUITest {
     }
 
     @Test
-    public void uiKysyyVinkin() {
+    public void uiKysyyVinkin() throws IOException, FileNotFoundException {
         ui.run();
         verify(console).readInput("Anna lukuvinkin otsikko: ");
     }
 
     @Test
-    public void uiTallentaaVinkin() {
+    public void uiTallentaaVinkin() throws IOException {
         when(console.readInput("Anna lukuvinkin otsikko: ")).thenReturn("Raamattu");
         ui.run();
-        try {
-            verify(dao).saveToFile(FILE, vinkki);
-        } catch (Exception e) {
-        }
+        dao.saveToFile(vinkki);
+        verify(dao).readFromFile();
+        
     }
 
     @Test
-    public void uiTulostaaVinkin() {
+    public void uiTulostaaVinkin() throws IOException {
         when(console.readInput("Anna lukuvinkin otsikko: ")).thenReturn("Raamattu");
         ui.run();
-        verify(console).printOutput("Luotiin lukuvinkki: Raamattu");
+        dao.saveToFile(vinkki);
+
+        verify(console).printOutput(vinkki.changeTimeToString(vinkki.getAddDateTime()) + " Luotiin lukuvinkki: Raamattu");
     }
 }
