@@ -28,14 +28,14 @@ public class ConsoleUITest {
         vinkit.add(new Kirja("Pieni punainen kirja"));
     }
     
-//    @Test(timeout = 1000) public void uiKysyyToiminnon() throws IOException, FileNotFoundException {
-//     
-//        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:"))
-//        .thenReturn("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
-//
-//        ui.run(); verify(console).
-//        readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
-//    }
+    @Test(timeout = 1000) public void uiKysyyToiminnon() throws IOException, FileNotFoundException {
+     
+        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("99");
+        
+        ui.run(); 
+        
+        verify(console, times(1)).readInput(anyString());
+    }
     
     @Test(timeout = 1000) public void uiTallentaaVinkin() throws IOException {
         try { when(dao.readFromFile()).thenReturn(vinkit); } catch (Exception e) { }
