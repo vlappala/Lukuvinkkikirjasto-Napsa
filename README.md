@@ -1,5 +1,6 @@
 # Lukuvinkkikirjasto-Napsa
 ![Github Actions](https://github.com/virtualakseli/Lukuvinkkikirjasto-Napsa/workflows/Java%20CI%20with%20Gradle/badge.svg)
+[![codecov](https://codecov.io/gh/VirtualAkseli/Lukuvinkkikirjasto-Napsa/branch/main/graph/badge.svg?token=HC2I7PL4KB)](https://codecov.io/gh/VirtualAkseli/Lukuvinkkikirjasto-Napsa)
 
 Ohtu 2020 miniprojekti.
 
