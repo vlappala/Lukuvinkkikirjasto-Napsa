@@ -43,7 +43,7 @@ public class Stepdefs {
     
     @Then("konsoli vastaa halutulla viestilla")
     public void konsoliVastaaViestilla() {
-        verify(mockIO).printOutput(eq(vinkki.changeTimeToString(vinkki.getAddDateTime()) + " Luotiin lukuvinkki: " + "Testiotsikko"));
+        verify(mockIO).printOutput(eq(vinkki.changeTimeToString(vinkki.getAddDateTime()) + " Luotiin lukuvinkki: " + "Testiotsikko" + " URL: NIL"));
     }
     /*
      * @Then("lukuvinkki tallentuu tiedostoon") public void

@@ -15,6 +15,8 @@ public class ConsoleUI {
     private LukuvinkkiDao dao;
     private List<Lukuvinkki> vinkit;
     String syote;
+    private String linkki;
+    
 
     public ConsoleUI(ConsoleIO console, LukuvinkkiDao dao) {
         this.console = console;
@@ -36,6 +38,7 @@ public class ConsoleUI {
 
         lueVinkit();
         while (true) {
+            
             // Näytä lista. Eka rivi riippuu siitä, onko haku päällä vai ei
             if (!rajattu) {
                 console.printOutput("\n 0 < Luo uusi vinkki >");
@@ -61,7 +64,7 @@ public class ConsoleUI {
             }
 
             // Toiminnon valinta. Virheelliset putoavat läpi ja tulostuu uusi lista.
-            if (haku && !syote.isBlank()) { // Haku
+            if (haku && !syote.trim().isEmpty()) { // Haku
                 Etsija e = new Etsija(vinkit);
                 vinkit = e.etsiVinkinNimella(syote);
                 rajattu = true;
@@ -74,7 +77,7 @@ public class ConsoleUI {
                 rajattu = false;
                 continue;
             } else if (numero > 0 && numero <= vinkit.size() + 1) {
-                nayta(vinkit.get(numero - 1)); // Valinnat alkavat ykkösestä
+                nayta(vinkit.get(numero - 1), (numero - 1)); // Valinnat alkavat ykkösestä
                 continue;
             } else if (numero == 99) { // Lopetus
                 break;
@@ -82,13 +85,27 @@ public class ConsoleUI {
         }
     }
 
-    public void nayta(Lukuvinkki v) {
+    public void nayta(Lukuvinkki v, int i) throws IOException {
+        
         console.printOutput("\n" + v.toString());
+        
+        linkki = console.readInput("\nMuokkaa vinkin linkkiä valitsemalla M, 0 palauttaa alkuvalikkoon");
+        if (linkki.equals("M")) {
+            v.setLink(console.readInput("\nKirjoita URL: "));
+            // Muokattu vinkki paikataan listassa
+            vinkit.set(i, v);
+            dao.saveListToFile(vinkit);
+        } else if (linkki.equals("0")) {
+            console.printOutput("\nPoistuttiin.");
+        } else {
+            console.printOutput("\nValintaa ei tunnistettu");
+        }
+        
     }
 
     public void lisaa() {
         Kirja kirja = new Kirja(console.readInput("\nAnna lukuvinkin otsikko: "));
-        if (kirja.toString() != null && !kirja.toString().isBlank()) {
+        if (kirja.toString() != null && !kirja.toString().trim().isEmpty()) {
             try {
                 dao.saveToFile(kirja);
                 vinkit = dao.readFromFile();
@@ -98,5 +115,7 @@ public class ConsoleUI {
             console.printOutput(kirja.getAddTime() + " Luotiin lukuvinkki: " + kirja);
         }
     }
+
+    
 
 }

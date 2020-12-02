@@ -21,7 +21,7 @@ public class LukuvinkkiDao {
     List<Lukuvinkki> vinkit;
     File newFile;
     Scanner scanner;
-    
+    Boolean testFile = false;
 
     public void saveToFile(Lukuvinkki content) throws IOException {
         
@@ -29,7 +29,10 @@ public class LukuvinkkiDao {
         newFile = new File(filePath + ".txt");
         newFile.createNewFile();
 
-        
+        if (testFile) {
+            newFile.deleteOnExit();
+        }
+
         if (readFromFile() == null) {
             vinkit = new ArrayList<Lukuvinkki>();
             
@@ -39,11 +42,32 @@ public class LukuvinkkiDao {
         else {
 
             vinkit = readFromFile();
+
             vinkit.add(content);
         }
 
 
         String output = gson.toJson(vinkit);
+    
+        FileOutputStream oFile = new FileOutputStream(newFile, false); 
+        FileWriter fileWriter = new FileWriter(newFile);
+        fileWriter.write(output + "\n");
+        
+        fileWriter.close();
+   
+    }
+
+    public void saveListToFile(List<Lukuvinkki> content) throws IOException {
+        
+        
+        newFile = new File(filePath + ".txt");
+        newFile.createNewFile();
+
+        if (testFile) {
+            newFile.deleteOnExit();
+        }
+
+        String output = gson.toJson(content);
     
         FileOutputStream oFile = new FileOutputStream(newFile, false); 
         FileWriter fileWriter = new FileWriter(newFile);
@@ -87,4 +111,10 @@ public class LukuvinkkiDao {
 
     }
 
+    public void useTestFile() throws IOException, FileNotFoundException {
+        filePath = "./Test";
+        testFile = true;
+    }
+
 }
+
