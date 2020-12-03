@@ -56,9 +56,9 @@ public class ConsoleUITest {
         when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("0", "99");
         
         when(console.readInput("\nAnna lukuvinkin otsikko: ")).thenReturn("Raamattu");
-        ui.run(); dao.saveToFile(vinkki);
-
+        ui.run(); 
+        
         verify(console).printOutput(vinkki.changeTimeToString(vinkki.getAddDateTime()) +
-        " Luotiin lukuvinkki: Raamattu"); }
+        " Luotiin lukuvinkki: Raamattu URL: NIL"); }
     
     }
