@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.lang.reflect.Type;
 import com.google.gson.InstanceCreator;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
 
@@ -67,5 +68,30 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     public String changeTimeToString(LocalDateTime time) {
         return this.addDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"));
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        final Lukuvinkki other = (Lukuvinkki) obj;
+        if (!Objects.equals(this.label, other.label)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.link, other.link)) {
+            return false;
+        }
+        if (!Objects.equals(this.addDateTime, other.addDateTime)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

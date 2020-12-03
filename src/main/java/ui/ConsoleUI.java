@@ -8,6 +8,8 @@ import io.ConsoleIO;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConsoleUI {
 
@@ -15,7 +17,6 @@ public class ConsoleUI {
     private LukuvinkkiDao dao;
     private List<Lukuvinkki> vinkit;
     String syote;
-    private String linkki;
     
 
     public ConsoleUI(ConsoleIO console, LukuvinkkiDao dao) {
@@ -27,9 +28,11 @@ public class ConsoleUI {
     private void lueVinkit() throws IOException, FileNotFoundException {
         try {
             vinkit = dao.readFromFile();
+            if (vinkit == null) {
+                vinkit = new ArrayList<Lukuvinkki>();
+            }
         } catch (Exception e) {
             console.printOutput("VIRHE: " + e.getMessage());
-            vinkit = new ArrayList<Lukuvinkki>();
         }
     }
 
@@ -50,7 +53,7 @@ public class ConsoleUI {
                 i++;
                 console.printOutput(String.format("%2d  %-20.20s  %s", i, v.getLabel(), v.getAddTime()));
             }
-            console.printOutput("99 < Lopeta ohjelma >");
+            console.printOutput("999 < Lopeta ohjelma >");
 
             // Lue syöte. Teksti tarkoittaa hakua, numero jotain toimintoa
             syote = console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
@@ -76,10 +79,10 @@ public class ConsoleUI {
                 lueVinkit();
                 rajattu = false;
                 continue;
-            } else if (numero > 0 && numero <= vinkit.size() + 1) {
+            } else if (numero > 0 && numero <= vinkit.size()) {
                 nayta(vinkit.get(numero - 1), (numero - 1)); // Valinnat alkavat ykkösestä
                 continue;
-            } else if (numero == 99) { // Lopetus
+            } else if (numero == 999) { // Lopetus
                 break;
             }
         }
@@ -89,18 +92,28 @@ public class ConsoleUI {
         
         console.printOutput("\n" + v.toString());
         
-        linkki = console.readInput("\nMuokkaa vinkin linkkiä valitsemalla M, 0 palauttaa alkuvalikkoon");
-        if (linkki.equals("M")) {
+        String valinta = console.readInput("\nMuokkaa vinkin linkkiä valitsemalla M"
+                + "\nPoista linkki valitsemalla P"
+                + "\nPalaa alkuvalikkoon valitsemalla 0");
+        if (valinta.equals("M")) {
             v.setLink(console.readInput("\nKirjoita URL: "));
             // Muokattu vinkki paikataan listassa
             vinkit.set(i, v);
             dao.saveListToFile(vinkit);
-        } else if (linkki.equals("0")) {
+        } else if (valinta.equals("P")) {
+            poista(v);
+        } else if (valinta.equals("0")) {
             console.printOutput("\nPoistuttiin.");
         } else {
             console.printOutput("\nValintaa ei tunnistettu");
         }
         
+    }
+    
+    public void poista(Lukuvinkki v) {
+        dao.deleteFromFile(v);
+        vinkit = dao.readFromFile();
+        console.printOutput("Poistettiin: " + v.getLabel());
     }
 
     public void lisaa() {

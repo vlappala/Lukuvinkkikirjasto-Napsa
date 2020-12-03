@@ -21,6 +21,9 @@ public class Stepdefs {
     LukuvinkkiDao mockLukuvinkkiDao;
     Kirja vinkki;
     ConsoleUI ui;
+    
+    String addNumber;
+    String exitNumber;
 
     @Given("konsoli pyytaa lukuvinkin otsikkoa")
     public void konsoliPyytaaOtsikkoa() {
@@ -28,6 +31,9 @@ public class Stepdefs {
         mockLukuvinkkiDao = mock(LukuvinkkiDao.class);
         vinkki = new Kirja("Testiotsikko");
         ui = new ConsoleUI(mockIO, mockLukuvinkkiDao);
+        
+        addNumber = "0";
+        exitNumber = "999";
     }
 
     
@@ -59,7 +65,7 @@ public class Stepdefs {
      
 
     public void otsikkoSyotetaan(String otsikko) throws IOException {
-        when(mockIO.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("0", "99");
+        when(mockIO.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn(addNumber, exitNumber);
         when(mockIO.readInput("\nAnna lukuvinkin otsikko: ")).thenReturn(otsikko);
         
         ui.run();

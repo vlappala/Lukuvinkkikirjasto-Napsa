@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 
 import domain.Lukuvinkki;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LukuvinkkiDao {
 
@@ -23,19 +25,15 @@ public class LukuvinkkiDao {
     Scanner scanner;
     Boolean testFile = false;
 
-    public void saveToFile(Lukuvinkki content) throws IOException {
+    public void saveToFile(Lukuvinkki content) {
         
-        
-        newFile = new File(filePath + ".txt");
-        newFile.createNewFile();
-
-        if (testFile) {
-            newFile.deleteOnExit();
+        if (newFile == null) {
+            createFile();
         }
 
         if (readFromFile() == null) {
             vinkit = new ArrayList<Lukuvinkki>();
-            
+
             vinkit.add(content);
         }
 
@@ -46,69 +44,102 @@ public class LukuvinkkiDao {
             vinkit.add(content);
         }
 
-
         String output = gson.toJson(vinkit);
     
-        FileOutputStream oFile = new FileOutputStream(newFile, false); 
-        FileWriter fileWriter = new FileWriter(newFile);
-        fileWriter.write(output + "\n");
-        
-        fileWriter.close();
+        //FileOutputStream oFile = new FileOutputStream(newFile, false); 
+        writeToFile(output);
    
     }
-
-    public void saveListToFile(List<Lukuvinkki> content) throws IOException {
+    
+    public void deleteFromFile(Lukuvinkki content) {
         
+        vinkit = readFromFile();
+        
+        if (vinkit != null) {
+            vinkit.remove(content);
+            
+            String output = gson.toJson(vinkit);
+            writeToFile(output);
+        }
+        
+    }
+
+    public void saveListToFile(List<Lukuvinkki> content){
+        
+        if (newFile == null) {
+            createFile();
+        }
+        
+        String output = gson.toJson(content);
+    
+        //FileOutputStream oFile = new FileOutputStream(newFile, false); 
+        writeToFile(output);
+       
+    }
+
+    public List<Lukuvinkki> readFromFile() {
+        
+        String content = "";
+        
+        List<Lukuvinkki> fileContent = null;
+        
+        try {
+            
+            FileInputStream input = new FileInputStream(filePath + ".txt");
+            scanner = new Scanner(input);
+            
+            if (!scanner.hasNextLine()) {
+                return null;
+            }
+
+            while (scanner.hasNextLine()) {
+                String next = scanner.nextLine();
+                content = content + next;
+            }
+
+            scanner.close();
+
+            fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {}.getType());
+
+            input.close();
+            
+        } catch (IOException e) {
+            System.out.println("VIRHE: " + e.getMessage());
+        }
+       
+        return fileContent;
+
+    }
+    
+    //apumetodi copypasten vähentämiseksi
+    public void createFile() {
         
         newFile = new File(filePath + ".txt");
-        newFile.createNewFile();
-
+        try {
+            newFile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("VIRHE: " + e.getMessage());
+        }
+        
         if (testFile) {
             newFile.deleteOnExit();
         }
-
-        String output = gson.toJson(content);
-    
-        FileOutputStream oFile = new FileOutputStream(newFile, false); 
-        FileWriter fileWriter = new FileWriter(newFile);
-        fileWriter.write(output + "\n");
         
-        fileWriter.close();
-   
     }
-
-    public List<Lukuvinkki> readFromFile() throws FileNotFoundException, IOException {
+    
+    //apumetodi copypasten vähentämiseksi
+    public void writeToFile(String content) {
         
-       
-        String content = "";
-        
-
-        
-        FileInputStream input = new FileInputStream(filePath + ".txt");
-        scanner = new Scanner(input);
-       
-        
-        
-        
-        if (!scanner.hasNextLine()) {
-            return null;
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter(newFile);
+            fileWriter.write(content + "\n");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("VIRHE: " + e.getMessage());
         }
         
-        while (scanner.hasNextLine()) {
-            
-            content = content + scanner.nextLine();
-        }
-         
-        
-
-        scanner.close();
-
-        List<Lukuvinkki> fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {}.getType());
-
-        
-        
-        return fileContent;
-
     }
 
     public void useTestFile() throws IOException, FileNotFoundException {
