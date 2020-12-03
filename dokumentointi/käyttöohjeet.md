@@ -7,13 +7,13 @@ Alla mainitut komennot tulee suorittaa ohjelman hakemiston juuressa.
 Ohjelma on paketoitavissa -jar muotoon komennolla
 
 ```
-./gradlew jar
+./gradlew shadowJar
 ```
 
 .jar on suoritettavissa komennolla
 
 ```
-java -jar build/libs/Lukuvinkkikirjasto-Napsa.jar  
+java -jar build/libs/Lukuvinkkikirjasto-Napsa-all.jar  
 ```
 
 Ohjelma on suoritettavissa komennolla
