@@ -75,7 +75,6 @@ public class ConsoleUI {
         }
     }
 
-
     public void lista() {
         int i = 0;
         for (Lukuvinkki v : vinkit) {
@@ -112,22 +111,28 @@ public class ConsoleUI {
             }
             lisaaLinkki(v);
             //syote = console.readInput("Anna lukuvinkin linkki: ");
-            
+
 /////////////////////////////////////////////////////////////////////////////
 // Tässä pitää testata onko syötetty URL kelvollinen, muuten asettaa syote=""
 /////////////////////////////////////////////////////////////////////////////
             //syote = (syote.length()) == 0 ? linkki : syote;
-            
             //v.setLink(syote.trim());
             // Tallennus
 /////////////////////////////////////////////////////////////////////////////
 // Tässä pitää päivittää v:n muokkauspäiväys
 /////////////////////////////////////////////////////////////////////////////
+            syote = console.readInput("Anna lukuvinkin tägit (puolipisteellä eroteltuna, esim: linkki;vinkki");
+
+            String[] palat = syote.split(";");
+
+            for (int i = 0; i < palat.length; i++) {
+                v.addTagi(palat[i]);
+            }
             dao.saveListToFile(vinkit);
             console.printOutput(v.getAddTime() + " tallennettiin lukuvinkki: " + v + "\n");
         }
     }
-    
+
     public void lisaaLinkki(Lukuvinkki vinkki) {
         boolean linkkiValidi = false;
         while (!linkkiValidi) {
@@ -146,8 +151,6 @@ public class ConsoleUI {
             }
         }
     }
-    
-    
 
     public void poista(Lukuvinkki v) throws IOException, FileNotFoundException {
         vinkit.remove(v);
