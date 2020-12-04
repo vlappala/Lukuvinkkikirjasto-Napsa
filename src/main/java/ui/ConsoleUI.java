@@ -115,12 +115,10 @@ public class ConsoleUI {
 /////////////////////////////////////////////////////////////////////////////
 // Tässä pitää testata onko syötetty URL kelvollinen, muuten asettaa syote=""
 /////////////////////////////////////////////////////////////////////////////
+
             //syote = (syote.length()) == 0 ? linkki : syote;
             //v.setLink(syote.trim());
-            // Tallennus
-/////////////////////////////////////////////////////////////////////////////
-// Tässä pitää päivittää v:n muokkauspäiväys
-/////////////////////////////////////////////////////////////////////////////
+
             syote = console.readInput("Anna lukuvinkin tägit (puolipisteellä eroteltuna, esim: linkki;vinkki");
 
             String[] palat = syote.split(";");
@@ -128,6 +126,14 @@ public class ConsoleUI {
             for (int i = 0; i < palat.length; i++) {
                 v.addTagi(palat[i]);
             }
+
+            
+
+            // Tallennus
+/////////////////////////////////////////////////////////////////////////////
+// Tässä pitää päivittää v:n muokkauspäiväys
+/////////////////////////////////////////////////////////////////////////////
+  
             dao.saveListToFile(vinkit);
             console.printOutput(v.getAddTime() + " tallennettiin lukuvinkki: " + v + "\n");
         }
@@ -157,5 +163,7 @@ public class ConsoleUI {
         dao.deleteFromFile(v);
         console.printOutput("Poistettiin: " + v.getLabel() + "\n");
     }
+
+
 
 }
