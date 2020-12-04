@@ -18,7 +18,10 @@ public class ConsoleUITest {
     ConsoleIO console;
     LukuvinkkiDao dao;
     ConsoleUI ui;
-
+    
+    String addNumber;
+    String exitNumber;
+    
     @Before
     public void setUp() {
         console = mock(ConsoleIO.class);
@@ -26,11 +29,14 @@ public class ConsoleUITest {
         ui = new ConsoleUI(console, dao);
         vinkit.add(new Kirja("Koraani"));
         vinkit.add(new Kirja("Pieni punainen kirja"));
+        
+        addNumber = "0";
+        exitNumber = "999";
     }
     
     @Test(timeout = 1000) public void uiKysyyToiminnon() throws IOException, FileNotFoundException {
      
-        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("99");
+        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn(exitNumber);
         
         ui.run(); 
         
@@ -40,7 +46,7 @@ public class ConsoleUITest {
     @Test(timeout = 1000) public void uiTallentaaVinkin() throws IOException {
         try { when(dao.readFromFile()).thenReturn(vinkit); } catch (Exception e) { }
         when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).
-        thenReturn("0", "99");
+        thenReturn(addNumber, exitNumber);
         
         when(console.readInput("\nAnna lukuvinkin otsikko: ")).thenReturn("Raamattu");
         ui.run(); 
@@ -53,7 +59,7 @@ public class ConsoleUITest {
         try { when(dao.readFromFile()).thenReturn(vinkit); 
         } catch (Exception e) { 
         } 
-        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn("0", "99");
+        when(console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:")).thenReturn(addNumber, exitNumber);
         
         when(console.readInput("\nAnna lukuvinkin otsikko: ")).thenReturn("Raamattu");
         ui.run(); 
