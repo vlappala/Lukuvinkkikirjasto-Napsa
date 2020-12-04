@@ -1,16 +1,13 @@
 package dao;
 
-
-import java.lang.reflect.Type; 
+import java.lang.reflect.Type;
 import java.io.*;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;  
+import com.google.gson.reflect.TypeToken;
 import java.util.Scanner;
 import java.util.List;
 import java.util.List;
 import java.util.ArrayList;
-
-
 
 import domain.Lukuvinkki;
 import java.util.logging.Level;
@@ -26,7 +23,7 @@ public class LukuvinkkiDao {
     Boolean testFile = false;
 
     public void saveToFile(Lukuvinkki content) {
-        
+
         if (newFile == null) {
             createFile();
         }
@@ -35,9 +32,7 @@ public class LukuvinkkiDao {
             vinkit = new ArrayList<Lukuvinkki>();
 
             vinkit.add(content);
-        }
-
-        else {
+        } else {
 
             vinkit = readFromFile();
 
@@ -45,49 +40,49 @@ public class LukuvinkkiDao {
         }
 
         String output = gson.toJson(vinkit);
-    
+
         //FileOutputStream oFile = new FileOutputStream(newFile, false); 
         writeToFile(output);
-   
+
     }
-    
+
     public void deleteFromFile(Lukuvinkki content) {
-        
+
         vinkit = readFromFile();
-        
+
         if (vinkit != null) {
             vinkit.remove(content);
-            
+
             String output = gson.toJson(vinkit);
             writeToFile(output);
         }
-        
+
     }
 
-    public void saveListToFile(List<Lukuvinkki> content){
-        
+    public void saveListToFile(List<Lukuvinkki> content) {
+
         if (newFile == null) {
             createFile();
         }
-        
+
         String output = gson.toJson(content);
-    
+
         //FileOutputStream oFile = new FileOutputStream(newFile, false); 
         writeToFile(output);
-       
+
     }
 
     public List<Lukuvinkki> readFromFile() {
-        
+
         String content = "";
-        
+
         List<Lukuvinkki> fileContent = null;
-        
+
         try {
-            
+
             FileInputStream input = new FileInputStream(filePath + ".txt");
             scanner = new Scanner(input);
-            
+
             if (!scanner.hasNextLine()) {
                 return null;
             }
@@ -99,37 +94,40 @@ public class LukuvinkkiDao {
 
             scanner.close();
 
-            fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {}.getType());
+            fileContent = gson.fromJson(content, new TypeToken<List<Lukuvinkki>>() {
+            }.getType());
 
             input.close();
-            
+
+        } catch (FileNotFoundException e) {
+            fileContent = new ArrayList<>();
         } catch (IOException e) {
             System.out.println("VIRHE: " + e.getMessage());
         }
-       
+
         return fileContent;
 
     }
-    
+
     //apumetodi copypasten vähentämiseksi
     public void createFile() {
-        
+
         newFile = new File(filePath + ".txt");
         try {
             newFile.createNewFile();
         } catch (IOException e) {
             System.out.println("VIRHE: " + e.getMessage());
         }
-        
+
         if (testFile) {
             newFile.deleteOnExit();
         }
-        
+
     }
-    
+
     //apumetodi copypasten vähentämiseksi
     public void writeToFile(String content) {
-        
+
         FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(newFile);
@@ -139,7 +137,7 @@ public class LukuvinkkiDao {
         } catch (IOException e) {
             System.out.println("VIRHE: " + e.getMessage());
         }
-        
+
     }
 
     public void useTestFile() throws IOException, FileNotFoundException {
@@ -148,4 +146,3 @@ public class LukuvinkkiDao {
     }
 
 }
-
