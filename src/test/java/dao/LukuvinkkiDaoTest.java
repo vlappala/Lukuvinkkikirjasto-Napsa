@@ -35,7 +35,7 @@ public class LukuvinkkiDaoTest {
 
     }
     
-    // tyhjennet‰‰n file jokaisen testin j‰lkeen
+    // tyhjennet√§√§n file jokaisen testin j√§lkeen
     @After
     public void tearDown() throws FileNotFoundException, IOException {
         FileWriter pw = new FileWriter("./Test.txt");

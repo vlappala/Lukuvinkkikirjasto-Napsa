@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import com.google.gson.InstanceCreator;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.net.URL;
 
 public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
 
@@ -15,11 +16,13 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     // esimerkkimuuttuja lisäyspäivämäärälle
     private LocalDateTime addDateTime;
     private String link;
+    private URL linkki;
 
     public Lukuvinkki(String label) {
         this.label = label;
         this.addDateTime = LocalDateTime.now();
         this.link = "NIL";
+        this.linkki = null;
 
     }
 
@@ -42,9 +45,17 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     public void setLink(String link) {
         this.link = link;
     }
+    
+    public void setLinkki(URL linkki) {
+        this.linkki = linkki;
+    }
 
     public String getLink() {
         return this.link;
+    }
+    
+    public URL getLinkki() {
+        return this.linkki;
     }
 
     public LocalDateTime getAddDateTime() {
@@ -57,7 +68,12 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
 
     @Override
     public String toString() {
-        return this.label + " URL: " + this.link;
+        if (this.linkki == null) {
+            return this.label + " URL: NIL";
+        } else {
+            return this.label + " URL: " + this.linkki;
+        }
+        //return this.label + " URL: " + this.link;
     }
 
     @Override

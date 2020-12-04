@@ -111,7 +111,7 @@ public class LukuvinkkiDao {
 
     }
     
-    //apumetodi copypasten v‰hent‰miseksi
+    //apumetodi copypasten v√§hent√§miseksi
     public void createFile() {
         
         newFile = new File(filePath + ".txt");
@@ -127,7 +127,7 @@ public class LukuvinkkiDao {
         
     }
     
-    //apumetodi copypasten v‰hent‰miseksi
+    //apumetodi copypasten v√§hent√§miseksi
     public void writeToFile(String content) {
         
         FileWriter fileWriter;
