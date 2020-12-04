@@ -31,6 +31,12 @@ public class LukuvinkkiTest {
         lukuvinkki.setLabel("testLabel3");
         assertEquals(lukuvinkki.toString(), "testLabel3 URL: NIL");
     }
+    
+    @Test
+    public void newLukuvinkkiHasSameAddAndModifiedTime() {
+        lukuvinkki.setLabel("testLabel3");
+        assertEquals(lukuvinkki.getAddTime(), lukuvinkki.getModifiedTime());
+    }
 
     public class LukuvinkkiImpl extends Lukuvinkki {
         

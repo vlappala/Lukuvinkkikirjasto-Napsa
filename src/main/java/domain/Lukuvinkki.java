@@ -13,14 +13,15 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     private String label;
     // lukuvinkin tyyppi esim. kirja
     private String type;
-    // esimerkkimuuttuja lisäyspäivämäärälle
-    private LocalDateTime addDateTime;
     private String link;
     private URL linkki;
-
+    private LocalDateTime addDateTime;
+    private LocalDateTime modifiedDateTime;
+    
     public Lukuvinkki(String label) {
         this.label = label;
         this.addDateTime = LocalDateTime.now();
+        this.modifiedDateTime = this.addDateTime;
         this.link = "NIL";
         this.linkki = null;
 
@@ -28,6 +29,10 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+    
+    public void setModifiedDateTime() {
+        this.modifiedDateTime = LocalDateTime.now();
     }
 
     public String getLabel() {
@@ -63,7 +68,15 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     }
 
     public String getAddTime() {
-        return this.changeTimeToString(addDateTime);
+        return this.changeTimeToString(this.getAddDateTime());
+    }
+    
+    public LocalDateTime getModifiedDateTime() {
+        return this.modifiedDateTime;
+    }
+    
+    public String getModifiedTime() {
+        return this.changeTimeToString(this.getModifiedDateTime());
     }
 
     @Override
