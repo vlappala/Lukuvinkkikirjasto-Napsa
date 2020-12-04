@@ -42,17 +42,18 @@ public class LukuvinkkiTest {
     @Test
     public void validLinkCanBeAddedToLukuvinkki() {
         URL link = null;
+        boolean excpt = false;
         try {
             // Huom! Koska validointi on javan URL luokkaan sisään rakennettuna,
             // ei linkin oikeellisuutta ole tarpeen erikseen varmistaa
             // tässä sovelluksessa testeillä
             link = new URL("https://github.com/VirtualAkseli/Lukuvinkkikirjasto-Napsa");
         } catch (Exception e) {
-            
+            excpt = true;
         }
         lukuvinkki.setLinkki(link);
         assertEquals(lukuvinkki.getLinkki(), link);
-        
+        assertFalse(excpt);
         
     }
 
