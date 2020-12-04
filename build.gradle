@@ -42,5 +42,10 @@ jacocoTestReport {
         xml.enabled true
         html.enabled true
     }
+    afterEvaluate {
+        getClassDirectories().setFrom(classDirectories.files.collect {
+                fileTree(dir: "build/classes/java/main", exclude: ['ui/**', 'io/**', 'Main.class'])
+            })
+    }
 }
 

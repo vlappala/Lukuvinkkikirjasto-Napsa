@@ -38,8 +38,12 @@ public class LukuvinkkiTest {
         lukuvinkki.addTagi("test2");
         assertEquals(lukuvinkki.getTagit().size(), 2);
         assertEquals(lukuvinkki.getTagit().get(1), "test2");
+    }
         
-        
+    @Test    
+    public void newLukuvinkkiHasSameAddAndModifiedTime() {
+        lukuvinkki.setLabel("testLabel3");
+        assertEquals(lukuvinkki.getAddTime(), lukuvinkki.getModifiedTime());
     }
 
     public class LukuvinkkiImpl extends Lukuvinkki {
