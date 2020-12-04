@@ -6,6 +6,8 @@ import dao.LukuvinkkiDao;
 import domain.Etsija;
 import io.ConsoleIO;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 public class ConsoleUI {
@@ -17,6 +19,7 @@ public class ConsoleUI {
     public ConsoleUI(ConsoleIO console, LukuvinkkiDao dao) {
         this.console = console;
         this.dao = dao;
+        //this.vinkit = new ArrayList<>();
     }
 
     private void lueVinkit() throws IOException, FileNotFoundException {
@@ -102,22 +105,56 @@ public class ConsoleUI {
         if (syote.length() > 0) {   // Ei luoda tyhjää vinkkiä
             v.setLabel(syote);
             // Sama linkille
-            String linkki = (v.getLink() == null) ? "" : v.getLink();
-            if (linkki.length() > 0) {
-                console.printOutput("Lukuvinkin linkki on " + linkki);
+            //URL linkki = (v.getLinkki() == null) ? null : v.getLinkki();
+            if (v.getLinkki() != null) {
+                console.printOutput("Lukuvinkin linkki on " + v.getLinkki());
             }
-            syote = console.readInput("Anna lukuvinkin linkki: ");
+            lisaaLinkki(v);
+            //syote = console.readInput("Anna lukuvinkin linkki: ");
+
 /////////////////////////////////////////////////////////////////////////////
 // Tässä pitää testata onko syötetty URL kelvollinen, muuten asettaa syote=""
 /////////////////////////////////////////////////////////////////////////////
-            syote = (syote.length()) == 0 ? linkki : syote;
-            v.setLink(syote.trim());
+
+            //syote = (syote.length()) == 0 ? linkki : syote;
+            //v.setLink(syote.trim());
+
+            syote = console.readInput("Anna lukuvinkin tägit (puolipisteellä eroteltuna, esim: linkki;vinkki");
+
+            String[] palat = syote.split(";");
+
+            for (int i = 0; i < palat.length; i++) {
+                v.addTagi(palat[i]);
+            }
+
+            
+
             // Tallennus
 /////////////////////////////////////////////////////////////////////////////
 // Tässä pitää päivittää v:n muokkauspäiväys
 /////////////////////////////////////////////////////////////////////////////
+  
             dao.saveListToFile(vinkit);
             console.printOutput(v.getAddTime() + " tallennettiin lukuvinkki: " + v + "\n");
+        }
+    }
+
+    public void lisaaLinkki(Lukuvinkki vinkki) {
+        boolean linkkiValidi = false;
+        while (!linkkiValidi) {
+            try {
+                String linkkiInput = this.console.readInput("Anna vinkkiin liittyvä linkki "
+                        + "(voit myös jättää tyhjäksi): ");
+                if (linkkiInput.equals("")) {
+                    break;
+                } else {
+                    URL urli = new URL(linkkiInput);
+                    linkkiValidi = true;
+                    vinkki.setLinkki(urli);
+                }
+            } catch (MalformedURLException e) {
+                this.console.printOutput("Antamasi linkki ei ole validi!");
+            }
         }
     }
 
@@ -126,5 +163,7 @@ public class ConsoleUI {
         dao.deleteFromFile(v);
         console.printOutput("Poistettiin: " + v.getLabel() + "\n");
     }
+
+
 
 }

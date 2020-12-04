@@ -76,7 +76,9 @@ public class LukuvinkkiDao {
 
         String content = "";
 
-        List<Lukuvinkki> fileContent = null;
+        
+        List<Lukuvinkki> fileContent = new ArrayList<>();
+        
 
         try {
 
@@ -84,7 +86,7 @@ public class LukuvinkkiDao {
             scanner = new Scanner(input);
 
             if (!scanner.hasNextLine()) {
-                return null;
+                return fileContent;
             }
 
             while (scanner.hasNextLine()) {

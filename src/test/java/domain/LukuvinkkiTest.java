@@ -29,10 +29,18 @@ public class LukuvinkkiTest {
     @Test
     public void testToString() {
         lukuvinkki.setLabel("testLabel3");
-        assertEquals(lukuvinkki.toString(), "testLabel3 URL: NIL");
+        assertEquals(lukuvinkki.toString(), "testLabel3 URL: NIL, tägit: []");
     }
     
     @Test
+    public void testAddTag() {
+        lukuvinkki.addTagi("test1");
+        lukuvinkki.addTagi("test2");
+        assertEquals(lukuvinkki.getTagit().size(), 2);
+        assertEquals(lukuvinkki.getTagit().get(1), "test2");
+    }
+        
+    @Test    
     public void newLukuvinkkiHasSameAddAndModifiedTime() {
         lukuvinkki.setLabel("testLabel3");
         assertEquals(lukuvinkki.getAddTime(), lukuvinkki.getModifiedTime());

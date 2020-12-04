@@ -10,7 +10,7 @@ public class KirjaTest {
     public void tulostusOikein() {
         Kirja test = new Kirja("Moby Dick");
 
-        assertEquals("Moby Dick URL: NIL", test.toString());
+        assertEquals("Moby Dick URL: NIL, tägit: []", test.toString());
     }
 
 }
