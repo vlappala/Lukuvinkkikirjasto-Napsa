@@ -7,6 +7,8 @@ import com.google.gson.InstanceCreator;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
 
@@ -18,11 +20,14 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     private String link;
     private URL linkki;
 
+    private ArrayList<String> tagit;
+
     public Lukuvinkki(String label) {
         this.label = label;
         this.addDateTime = LocalDateTime.now();
         this.link = "NIL";
         this.linkki = null;
+        this.tagit = new ArrayList<>();
 
     }
 
@@ -45,7 +50,7 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     public void setLink(String link) {
         this.link = link;
     }
-    
+
     public void setLinkki(URL linkki) {
         this.linkki = linkki;
     }
@@ -53,9 +58,16 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     public String getLink() {
         return this.link;
     }
-    
+
     public URL getLinkki() {
         return this.linkki;
+    }
+
+    public void addTagi(String tagi) {
+        if (!this.tagit.contains(tagi)) {
+            this.tagit.add(tagi);
+        }
+        //this.tagit.add(tagi);
     }
 
     public LocalDateTime getAddDateTime() {
@@ -69,9 +81,9 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     @Override
     public String toString() {
         if (this.linkki == null) {
-            return this.label + " URL: NIL";
+            return this.label + " URL: NIL" + ", tägit: " + this.tagit;
         } else {
-            return this.label + " URL: " + this.linkki;
+            return this.label + " URL: " + this.linkki + ", tägit: " + this.tagit;
         }
         //return this.label + " URL: " + this.link;
     }
@@ -84,6 +96,7 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     public String changeTimeToString(LocalDateTime time) {
         return this.addDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"));
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -107,7 +120,5 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
         }
         return true;
     }
-    
-    
 
 }

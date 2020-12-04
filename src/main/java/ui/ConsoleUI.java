@@ -104,6 +104,8 @@ public class ConsoleUI {
             
             //v.setLink(console.readInput("\nKirjoita URL: "));
             // Muokattu vinkki paikataan listassa
+            String lisattavaTagi = console.readInput("Anna tagi");
+            v.addTagi(lisattavaTagi);
             vinkit.set(i, v);
             dao.saveListToFile(vinkit);
         } else if (valinta.equals("P")) {
@@ -175,6 +177,8 @@ public class ConsoleUI {
             }
         }
     }
+    
+    
 
     
 
