@@ -6,6 +6,8 @@ import dao.LukuvinkkiDao;
 import domain.Etsija;
 import io.ConsoleIO;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -96,7 +98,11 @@ public class ConsoleUI {
                 + "\nPoista linkki valitsemalla P"
                 + "\nPalaa alkuvalikkoon valitsemalla 0");
         if (valinta.equals("M")) {
-            v.setLink(console.readInput("\nKirjoita URL: "));
+            // UI luonnos...
+            lisaaLinkki(v);
+            // Luonnos päättyy...
+            
+            //v.setLink(console.readInput("\nKirjoita URL: "));
             // Muokattu vinkki paikataan listassa
             vinkit.set(i, v);
             dao.saveListToFile(vinkit);
@@ -126,6 +132,47 @@ public class ConsoleUI {
                 console.printOutput("VIRHE: " + e.getMessage());
             }
             console.printOutput(kirja.getAddTime() + " Luotiin lukuvinkki: " + kirja);
+        }
+    }
+    
+    public void luoVinkkiJaLinkki() {
+        Lukuvinkki vinkki = new Lukuvinkki(this.console.readInput("Lukuvinkin otsikko: "));
+        boolean linkkiValidi = false;
+        while (!linkkiValidi) {
+            try {
+                String linkkiInput = this.console.readInput("Anna vinkkiin liittyvä linkki "
+                        + "(voit myös jättää tyhjäksi): ");
+                if (linkkiInput.equals("")) {
+                    break;
+                } else {
+                    URL urli = new URL(linkkiInput);
+                    linkkiValidi = true;
+                    vinkki.setLinkki(urli);
+                }
+            } catch (MalformedURLException e) {
+                this.console.printOutput("Antamasi linkki ei ole validi!");
+            }
+        }
+        this.vinkit.add(vinkki);
+
+    }
+
+    public void lisaaLinkki(Lukuvinkki vinkki) {
+        boolean linkkiValidi = false;
+        while (!linkkiValidi) {
+            try {
+                String linkkiInput = this.console.readInput("Anna vinkkiin liittyvä linkki "
+                        + "(voit myös jättää tyhjäksi): ");
+                if (linkkiInput.equals("")) {
+                    break;
+                } else {
+                    URL urli = new URL(linkkiInput);
+                    linkkiValidi = true;
+                    vinkki.setLinkki(urli);
+                }
+            } catch (MalformedURLException e) {
+                this.console.printOutput("Antamasi linkki ei ole validi!");
+            }
         }
     }
 
