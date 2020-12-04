@@ -6,176 +6,125 @@ import dao.LukuvinkkiDao;
 import domain.Etsija;
 import io.ConsoleIO;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
 
 public class ConsoleUI {
 
-    private ConsoleIO console;
-    private LukuvinkkiDao dao;
+    private final ConsoleIO console;
+    private final LukuvinkkiDao dao;
     private List<Lukuvinkki> vinkit;
-    String syote;
-    
 
     public ConsoleUI(ConsoleIO console, LukuvinkkiDao dao) {
         this.console = console;
         this.dao = dao;
-        syote = "";
     }
 
     private void lueVinkit() throws IOException, FileNotFoundException {
         try {
             vinkit = dao.readFromFile();
-            if (vinkit == null) {
-                vinkit = new ArrayList<Lukuvinkki>();
-            }
         } catch (Exception e) {
-            console.printOutput("VIRHE: " + e.getMessage());
+            vinkit = new ArrayList<>();
         }
     }
 
     public void run() throws IOException, FileNotFoundException {
-        boolean rajattu = false;
+        String syote;
 
         lueVinkit();
         while (true) {
-            
-            // Näytä lista. Eka rivi riippuu siitä, onko haku päällä vai ei
-            if (!rajattu) {
-                console.printOutput("\n 0 < Luo uusi vinkki >");
-            } else {
-                console.printOutput("\n 0 < Poista haku >");
-            }
-            int i = 0;
-            for (Lukuvinkki v : vinkit) {
-                i++;
-                console.printOutput(String.format("%2d  %-20.20s  %s", i, v.getLabel(), v.getAddTime()));
-            }
-            console.printOutput("999 < Lopeta ohjelma >");
-
             // Lue syöte. Teksti tarkoittaa hakua, numero jotain toimintoa
-            syote = console.readInput("\nValitse vinkki numerolla tai kirjoita teksti hakua varten:");
+            syote = console.readInput("(L)opeta (K)aikki (U)usi tai \nkirjoita useampi merkki hakua varten");
             int numero = -1;
-            boolean haku = true;
-
+            boolean haku = false;
             try {
-                numero = Integer.parseInt(syote);
-                haku = false;
+                numero = Integer.parseInt(syote) - 1; // Valinnat alkavat ykkösestä
             } catch (Exception e) {
+                syote = syote.toLowerCase().trim();
+                if (syote.length() > 1) {
+                    haku = true;
+                }
             }
 
-            // Toiminnon valinta. Virheelliset putoavat läpi ja tulostuu uusi lista.
-            if (haku && !syote.trim().isEmpty()) { // Haku
+            // Toiminnon valinta. Virheelliset putoavat läpi.
+            if (numero >= 0 && numero < vinkit.size()) {
+                nayta(vinkit.get(numero));
+            } else if (haku) {
                 Etsija e = new Etsija(vinkit);
-                vinkit = e.etsiVinkinNimella(syote);
-                rajattu = true;
-                continue;
-            } else if (numero == 0 && !rajattu) { // Lisäys
-                lisaa();
-                continue;
-            } else if (numero == 0 && rajattu) { // Haun poisto
+                List<Lukuvinkki> tulos = e.etsiVinkinNimella(syote);
+                if (tulos.isEmpty()) {        // Ei löytynyt
+                    console.printOutput("Ei löytynyt: " + syote);
+                } else if (tulos.size() == 1) { // Näytetään ainut
+                    nayta(tulos.get(0));
+                } else {                        // Lista tuloksista
+                    vinkit = tulos;
+                    lista();
+                }
+            } else if ("u".equals(syote)) { // Lisäys
+                Kirja uusi = new Kirja("");
+                vinkit.add(uusi);
+                muokkaa(uusi);
+            } else if ("k".equals(syote)) { // Näytä kaikki
                 lueVinkit();
-                rajattu = false;
-                continue;
-            } else if (numero > 0 && numero <= vinkit.size()) {
-                nayta(vinkit.get(numero - 1), (numero - 1)); // Valinnat alkavat ykkösestä
-                continue;
-            } else if (numero == 999) { // Lopetus
+                lista();
+            } else if ("l".equals(syote)) { // Lopetus
                 break;
             }
         }
     }
 
-    public void nayta(Lukuvinkki v, int i) throws IOException {
-        
-        console.printOutput("\n" + v.toString());
-        
-        String valinta = console.readInput("\nMuokkaa vinkin linkkiä valitsemalla M"
-                + "\nPoista linkki valitsemalla P"
-                + "\nPalaa alkuvalikkoon valitsemalla 0");
-        if (valinta.equals("M")) {
-            // UI luonnos...
-            lisaaLinkki(v);
-            // Luonnos päättyy...
-            
-            //v.setLink(console.readInput("\nKirjoita URL: "));
-            // Muokattu vinkki paikataan listassa
-            vinkit.set(i, v);
-            dao.saveListToFile(vinkit);
-        } else if (valinta.equals("P")) {
+    public void lista() {
+        int i = 0;
+        for (Lukuvinkki v : vinkit) {
+            i++;
+            console.printOutput(String.format("%2d  %-20.20s  %s", i, v.getLabel(), v.getAddTime()));
+        }
+        console.printOutput("\nValitse vinkki numerolla tai");
+    }
+
+    public void nayta(Lukuvinkki v) throws IOException {
+
+        console.printOutput("\n" + v.toString() + "\n");    // Tästä voisi tehdä vähän näyttävämmän
+        String syote = console.readInput("<RET>Takaisin (M)uokkaa (P)oista").toLowerCase().trim();
+
+        if (syote.equals("m")) {
+            muokkaa(v);
+        } else if (syote.equals("p")) {
             poista(v);
-        } else if (valinta.equals("0")) {
-            console.printOutput("\nPoistuttiin.");
-        } else {
-            console.printOutput("\nValintaa ei tunnistettu");
         }
-        
     }
-    
-    public void poista(Lukuvinkki v) {
+
+    public void muokkaa(Lukuvinkki v) throws IOException, FileNotFoundException {
+        if (v.getLabel() != null) {
+            console.printOutput("Lukuvinkin otsikko on " + v.getLabel());
+        }
+        String syote = console.readInput("Anna lukuvinkin otsikko: ").trim();
+        syote = (syote.length()) == 0 ? v.getLabel() : syote;
+        if (syote.length() > 0) {   // Ei luoda tyhjää vinkkiä
+            v.setLabel(syote);
+            // Sama linkille
+            String linkki = (v.getLink() == null) ? "" : v.getLink();
+            if (linkki.length() > 0) {
+                console.printOutput("Lukuvinkin linkki on " + linkki);
+            }
+            syote = console.readInput("Anna lukuvinkin linkki: ");
+/////////////////////////////////////////////////////////////////////////////
+// Tässä pitää testata onko syötetty URL kelvollinen, muuten asettaa syote=""
+/////////////////////////////////////////////////////////////////////////////
+            syote = (syote.length()) == 0 ? linkki : syote;
+            v.setLink(syote.trim());
+            // Tallennus
+/////////////////////////////////////////////////////////////////////////////
+// Tässä pitää päivittää v:n muokkauspäiväys
+/////////////////////////////////////////////////////////////////////////////
+            dao.saveListToFile(vinkit);
+            console.printOutput(v.getAddTime() + " tallennettiin lukuvinkki: " + v + "\n");
+        }
+    }
+
+    public void poista(Lukuvinkki v) throws IOException, FileNotFoundException {
+        vinkit.remove(v);
         dao.deleteFromFile(v);
-        vinkit = dao.readFromFile();
-        console.printOutput("Poistettiin: " + v.getLabel());
+        console.printOutput("Poistettiin: " + v.getLabel() + "\n");
     }
-
-    public void lisaa() {
-        Kirja kirja = new Kirja(console.readInput("\nAnna lukuvinkin otsikko: "));
-        if (kirja.toString() != null && !kirja.toString().trim().isEmpty()) {
-            try {
-                dao.saveToFile(kirja);
-                vinkit = dao.readFromFile();
-            } catch (Exception e) {
-                console.printOutput("VIRHE: " + e.getMessage());
-            }
-            console.printOutput(kirja.getAddTime() + " Luotiin lukuvinkki: " + kirja);
-        }
-    }
-    
-    public void luoVinkkiJaLinkki() {
-        Lukuvinkki vinkki = new Lukuvinkki(this.console.readInput("Lukuvinkin otsikko: "));
-        boolean linkkiValidi = false;
-        while (!linkkiValidi) {
-            try {
-                String linkkiInput = this.console.readInput("Anna vinkkiin liittyvä linkki "
-                        + "(voit myös jättää tyhjäksi): ");
-                if (linkkiInput.equals("")) {
-                    break;
-                } else {
-                    URL urli = new URL(linkkiInput);
-                    linkkiValidi = true;
-                    vinkki.setLinkki(urli);
-                }
-            } catch (MalformedURLException e) {
-                this.console.printOutput("Antamasi linkki ei ole validi!");
-            }
-        }
-        this.vinkit.add(vinkki);
-
-    }
-
-    public void lisaaLinkki(Lukuvinkki vinkki) {
-        boolean linkkiValidi = false;
-        while (!linkkiValidi) {
-            try {
-                String linkkiInput = this.console.readInput("Anna vinkkiin liittyvä linkki "
-                        + "(voit myös jättää tyhjäksi): ");
-                if (linkkiInput.equals("")) {
-                    break;
-                } else {
-                    URL urli = new URL(linkkiInput);
-                    linkkiValidi = true;
-                    vinkki.setLinkki(urli);
-                }
-            } catch (MalformedURLException e) {
-                this.console.printOutput("Antamasi linkki ei ole validi!");
-            }
-        }
-    }
-
-    
 
 }
