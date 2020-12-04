@@ -69,6 +69,10 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
         }
         //this.tagit.add(tagi);
     }
+    
+    public List getTagit() {
+        return this.tagit;
+    }
 
     public LocalDateTime getAddDateTime() {
         return this.addDateTime;
