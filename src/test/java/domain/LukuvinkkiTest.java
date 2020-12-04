@@ -29,7 +29,7 @@ public class LukuvinkkiTest {
     @Test
     public void testToString() {
         lukuvinkki.setLabel("testLabel3");
-        assertEquals(lukuvinkki.toString(), "testLabel3 URL: NIL");
+        assertEquals(lukuvinkki.toString(), "testLabel3 URL: NIL, tägit: []");
     }
     
     @Test
