@@ -126,16 +126,14 @@ public class ConsoleUI {
             for (int i = 0; i < palat.length; i++) {
                 v.addTagi(palat[i]);
             }
+                   
 
             
 
             // Tallennus
-/////////////////////////////////////////////////////////////////////////////
-// Tässä pitää päivittää v:n muokkauspäiväys
-/////////////////////////////////////////////////////////////////////////////
-  
+            v.setModifiedDateTime();
             dao.saveListToFile(vinkit);
-            console.printOutput(v.getAddTime() + " tallennettiin lukuvinkki: " + v + "\n");
+            console.printOutput(v.getModifiedTime() + " tallennettiin lukuvinkki: " + v + "\n");
         }
     }
 
