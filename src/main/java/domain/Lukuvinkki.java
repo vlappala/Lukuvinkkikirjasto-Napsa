@@ -115,7 +115,7 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
     }
 
     public String changeTimeToString(LocalDateTime time) {
-        return this.addDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"));
+        return time.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"));
     }
 
     @Override
