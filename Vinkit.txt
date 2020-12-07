@@ -1,0 +1,382 @@
+[
+  {
+    "label": "Lean Primer",
+    "link": "NIL",
+    "linkki": "http://www.leanprimer.com/downloads/lean_primer.pdf",
+    "tagit": [
+      "OhTu"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 29,
+        "second": 44,
+        "nano": 994846000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 30,
+        "second": 22,
+        "nano": 22592000
+      }
+    }
+  },
+  {
+    "label": "Database Normalization",
+    "link": "NIL",
+    "linkki": "https://www.w3schools.in/dbms/database-normalization/",
+    "tagit": [
+      "TiKaPe",
+      "WePa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 33,
+        "second": 19,
+        "nano": 602385000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 33,
+        "second": 40,
+        "nano": 678342000
+      }
+    }
+  },
+  {
+    "label": "Spring Framework",
+    "link": "NIL",
+    "linkki": "https://spring.io/projects/spring-framework",
+    "tagit": [
+      "TiKaPe",
+      "WePa",
+      "OhTe"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 34,
+        "second": 18,
+        "nano": 797077000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 34,
+        "second": 43,
+        "nano": 882716000
+      }
+    }
+  },
+  {
+    "label": "Theory of Computation",
+    "link": "NIL",
+    "linkki": "https://helsinki.primo.exlibrisgroup.com/discovery/fulldisplay?context\u003dL\u0026vid\u003d358UOH_INST:VU1\u0026search_scope\u003dMyInstitution\u0026isFrbr\u003dtrue\u0026tab\u003dLibraryCatalog\u0026docid\u003dalma9924804433506253",
+    "tagit": [
+      "LaMa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 37,
+        "second": 9,
+        "nano": 296888000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 37,
+        "second": 59,
+        "nano": 440537000
+      }
+    }
+  },
+  {
+    "label": "Python for Beginners",
+    "link": "NIL",
+    "linkki": "https://www.python.org/about/gettingstarted/",
+    "tagit": [
+      "OhPe",
+      "OhJa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 41,
+        "second": 38,
+        "nano": 3063000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 41,
+        "second": 59,
+        "nano": 69097000
+      }
+    }
+  },
+  {
+    "label": "The Big O Notation",
+    "link": "NIL",
+    "linkki": "https://towardsdatascience.com/the-big-o-notation-d35d52f38134",
+    "tagit": [
+      "TiRa",
+      "LaMa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 45,
+        "second": 36,
+        "nano": 682646000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 45,
+        "second": 54,
+        "nano": 741006000
+      }
+    }
+  },
+  {
+    "label": "Java Primer",
+    "link": "NIL",
+    "linkki": "https://leanpub.com/aprimeronjava/read",
+    "tagit": [
+      "OhPe",
+      "OhJa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 47,
+        "second": 49,
+        "nano": 299952000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 46,
+        "second": 2,
+        "nano": 335890000
+      }
+    }
+  },
+  {
+    "label": "NP-completeness",
+    "link": "NIL",
+    "linkki": "https://en.wikipedia.org/wiki/NP-completeness",
+    "tagit": [
+      "LaMa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 48,
+        "second": 9,
+        "nano": 964162000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 48,
+        "second": 30,
+        "nano": 18069000
+      }
+    }
+  },
+  {
+    "label": "Graph Search Algorithms",
+    "link": "NIL",
+    "linkki": "https://cs.stanford.edu/people/abisee/gs.pdf",
+    "tagit": [
+      "TiRa"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 51,
+        "second": 23,
+        "nano": 705703000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 51,
+        "second": 39,
+        "nano": 746834000
+      }
+    }
+  },
+  {
+    "label": "What is Scrum",
+    "link": "NIL",
+    "linkki": "https://www.scrum.org/resources/what-is-scrum",
+    "tagit": [
+      "OhTu"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 53,
+        "second": 14,
+        "nano": 27858000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 53,
+        "second": 25,
+        "nano": 61872000
+      }
+    }
+  },
+  {
+    "label": "Learn Git",
+    "link": "NIL",
+    "linkki": "https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud",
+    "tagit": [
+      "OhTu"
+    ],
+    "addDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 56,
+        "second": 12,
+        "nano": 555350000
+      }
+    },
+    "modifiedDateTime": {
+      "date": {
+        "year": 2020,
+        "month": 12,
+        "day": 7
+      },
+      "time": {
+        "hour": 18,
+        "minute": 56,
+        "second": 25,
+        "nano": 595871000
+      }
+    }
+  }
+]
