@@ -15,7 +15,7 @@ public class Etsija {
     public List<Lukuvinkki> etsiVinkinNimella(String hakusana) {
         ArrayList<Lukuvinkki> hakutulokset = new ArrayList<>();
         for (Lukuvinkki vinkki : this.vinkit) {
-            if (vinkki.getLabel().contains(hakusana)) {
+            if (vinkki.getLabel().toLowerCase().contains(hakusana)) {
                 hakutulokset.add(vinkki);
             }
         }
