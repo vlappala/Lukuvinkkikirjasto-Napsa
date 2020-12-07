@@ -30,7 +30,7 @@ public class Lukuvinkki implements InstanceCreator<Lukuvinkki> {
         this.label = label;
         this.addDateTime = LocalDateTime.now();
         this.modifiedDateTime = this.addDateTime;
-        this.link = "NIL";
+        this.link = "EMPTY";
         this.linkki = null;
         this.tagit = new ArrayList<>();
 
